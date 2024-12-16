@@ -62,7 +62,7 @@ function App() {
     <div className="App">
       <h1>CPF/CNPJ Manager</h1>
       <CpfCnpjForm onAdd={handleAddItem} />
-      <ErrorMessage message={message} />
+      {message && <ErrorMessage message={message} />}
       <Filters onChange={handleFilterChange} />
       <CpfCnpjList items={items} onBlockToggle={handleToggleBlock} onDelete={handleDeleteItem} />
     </div>

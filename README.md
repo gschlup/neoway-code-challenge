@@ -29,6 +29,11 @@ These instructions will help you get a copy of the project up and running on you
 3. Access the application:
    - Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
 
+4. Access the status API:
+   - Open your browser and navigate to [http://localhost:4000/status](http://localhost:4000/status)
+
+   This will show the total number of requests, the number of successful requests, and the number of error requests.
+
 ## 🛠️ Built With
 
 - React.js - Frontend Framework
