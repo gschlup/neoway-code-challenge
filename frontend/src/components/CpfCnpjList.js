@@ -2,16 +2,33 @@ import React from 'react';
 
 function CpfCnpjList({ items, onBlockToggle, onDelete }) {
   return (
-    <ul>
+    <ul className="space-y-4">
       {items.map((item) => (
-        <li key={item._id}>
-          {item.number} ({item.type}) - Blocked: {item.isBlocked ? 'Yes' : 'No'}
-          <button onClick={() => onBlockToggle(item._id, !item.isBlocked)}>
-            {item.isBlocked ? 'Unblock' : 'Block'}
-          </button>
-          <button onClick={() => onDelete(item._id)}>
-            Delete
-          </button>
+        <li key={item._id} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+          <span className="text-gray-800">
+            {item.number} ({item.type}) - 
+            <span className={`ml-2 ${item.isBlocked ? 'text-red-600' : 'text-green-600'}`}>
+              Blocked: {item.isBlocked ? 'Yes' : 'No'}
+            </span>
+          </span>
+          <div className="space-x-2">
+            <button 
+              onClick={() => onBlockToggle(item._id, !item.isBlocked)}
+              className={`px-4 py-2 rounded-md text-white ${
+                item.isBlocked 
+                  ? 'bg-green-500 hover:bg-green-600' 
+                  : 'bg-red-500 hover:bg-red-600'
+              }`}
+            >
+              {item.isBlocked ? 'Unblock' : 'Block'}
+            </button>
+            <button 
+              onClick={() => onDelete(item._id)}
+              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            >
+              Delete
+            </button>
+          </div>
         </li>
       ))}
     </ul>
