@@ -45,20 +45,20 @@ These instructions will help you get a copy of the project up and running on you
 ## 📝 Project Structure
 
 ```bash
+bash
 neoway-code-challenge/
 ├── backend/
 │ ├── src/
 │ │ ├── controllers/
-│ │ │ └── cpfCnpjController.js
+│ │ │ ├── cpfCnpjController.js
+│ │ │ └── statusController.js
 │ │ ├── models/
-│ │ │ └── CpfCnpj.js
+│ │ │ ├── CpfCnpj.js
 │ │ ├── routes/
-│ │ │ └── cpfCnpjRoutes.js
-│ │ ├── services/
-│ │ │ └── cpfCnpjService.js
-│ │ ├── utils/
-│ │ │ └── validators.js
+│ │ │ ├── index.js
 │ │ └── app.js
+│ ├── tests/
+│ │ └── api.test.js
 │ ├── package.json
 │ └── .env
 ├── frontend/
@@ -67,9 +67,14 @@ neoway-code-challenge/
 │ │ │ ├── CpfCnpjForm.js
 │ │ │ ├── CpfCnpjList.js
 │ │ │ ├── ErrorMessage.js
-│ │ │ └── Filters.js
+│ │ │ ├── Filters.js
+│ │ ├── services/
+│ │ │ └── api.js
 │ │ ├── App.js
 │ │ └── index.js
+│ ├── tests/
+│ │ └── components/
+│ │ └── CpfCnpjForm.test.js
 │ ├── package.json
 │ └── tailwind.config.js
 └── docker-compose.yml
