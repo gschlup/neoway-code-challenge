@@ -14,12 +14,14 @@ These instructions will help you get a copy of the project up and running on you
 ### Installation and Running
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/neoway-code-challenge.git
    cd neoway-code-challenge
    ```
 
 2. Start the application using Docker Compose:
+
    ```bash
    docker compose up -d
    ```
@@ -30,12 +32,14 @@ These instructions will help you get a copy of the project up and running on you
 ## 🛠️ Built With
 
 - React.js - Frontend Framework
-- Node.js - Backend Framework
+- Node.js and Express - Backend Framework
 - Tailwind CSS - Styling
 - Docker - Containerization
+- Docker Compose - Orchestration
 
 ## 📝 Project Structure
 
+```bash
 neoway-code-challenge/
 ├── backend/
 │ ├── src/
@@ -64,6 +68,7 @@ neoway-code-challenge/
 │ ├── package.json
 │ └── tailwind.config.js
 └── docker-compose.yml
+```
 
 ## 📄 License
 
