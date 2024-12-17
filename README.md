@@ -34,6 +34,10 @@ These instructions will help you get a copy of the project up and running on you
 
    This will show the total number of requests, the number of successful requests, and the number of error requests.
 
+5. Unit tests:
+   - Run `npm install` on both `/backend` and `/frontend` directories.
+   - Run the unit tests using the command `npm test` on both directories.
+
 ## 🛠️ Built With
 
 - React.js - Frontend Framework
@@ -45,7 +49,6 @@ These instructions will help you get a copy of the project up and running on you
 ## 📝 Project Structure
 
 ```bash
-bash
 neoway-code-challenge/
 ├── backend/
 │ ├── src/
