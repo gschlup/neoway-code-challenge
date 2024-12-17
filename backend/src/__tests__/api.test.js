@@ -1,6 +1,8 @@
 const Document = require('../models/Document');
 const DocumentController = require('../controllers/DocumentController');
 
+jest.useFakeTimers();
+
 describe('DocumentController', () => {
   let mockFind, mockSave, mockFindByIdAndUpdate, mockFindByIdAndDelete;
 
@@ -9,8 +11,10 @@ describe('DocumentController', () => {
     mockSave = jest.fn();
     mockFindByIdAndUpdate = jest.fn();
     mockFindByIdAndDelete = jest.fn();
+    mockFindOne = jest.fn();
 
     Document.find = mockFind;
+    Document.findOne = mockFindOne;
     Document.prototype.save = mockSave;
     Document.findByIdAndUpdate = mockFindByIdAndUpdate;
     Document.findByIdAndDelete = mockFindByIdAndDelete;
@@ -38,11 +42,22 @@ describe('DocumentController', () => {
       await DocumentController.getAll(req, res);
       expect(mockFind).toHaveBeenCalledWith({ type: 'CPF', isBlocked: true });
     });
+
+    it('should convert isBlocked string query to boolean', async () => {
+      mockFind.mockResolvedValue([]);
+      
+      const req = { query: { isBlocked: 'false' } };
+      const res = { json: jest.fn() };
+
+      await DocumentController.getAll(req, res);
+      expect(mockFind).toHaveBeenCalledWith({ isBlocked: false });
+    });
   });
 
   describe('create', () => {
     it('should create valid CPF record', async () => {
-      const mockItem = { type: 'CPF', number: '529.982.247-25' };
+      const mockItem = { type: 'CPF', number: '52998224725' };
+      mockFindOne.mockResolvedValue(null);
       mockSave.mockResolvedValue(mockItem);
 
       const req = { body: mockItem };
@@ -53,12 +68,57 @@ describe('DocumentController', () => {
     });
 
     it('should reject invalid CPF', async () => {
-      const req = { body: { type: 'CPF', number: '123.456.789-00' } };
+      const req = { body: { type: 'CPF', number: '12345678900' } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
       await DocumentController.create(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ error: 'Invalid CPF' });
+    });
+
+    it('should create valid CNPJ record', async () => {
+      const mockItem = { type: 'CNPJ', number: '11444777000161' };
+      mockFindOne.mockResolvedValue(null);
+      mockSave.mockResolvedValue(mockItem);
+
+      const req = { body: mockItem };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.create(req, res);
+      expect(res.status).toHaveBeenCalledWith(201);
+    });
+
+    it('should reject invalid CNPJ', async () => {
+      const req = { body: { type: 'CNPJ', number: '11444777000100' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.create(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Invalid CNPJ' });
+    });
+
+    it('should handle missing required fields', async () => {
+      const req = { body: { type: 'CPF' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.create(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Invalid CPF' });
+    });
+
+    it('should handle database errors during creation', async () => {
+      const mockItem = { type: 'CPF', number: '52998224725' };
+      mockSave.mockRejectedValue(new Error('Database error'));
+
+      const req = { body: mockItem };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.create(req, res);
+
+      jest.advanceTimersByTime(30000);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
     });
   });
 
@@ -84,6 +144,29 @@ describe('DocumentController', () => {
       await DocumentController.updateBlockStatus(req, res);
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ error: 'Record not found' });
+    });
+
+    it('should handle invalid block status value', async () => {
+      const req = { params: { id: '123' }, body: { isBlocked: 'invalid' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.updateBlockStatus(req, res);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Record not found' });
+    });
+
+    it('should handle database errors during update', async () => {
+      mockFindByIdAndUpdate.mockRejectedValue(new Error('Database error'));
+
+      const req = { params: { id: '123' }, body: { isBlocked: true } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+
+      await DocumentController.updateBlockStatus(req, res);
+
+      jest.advanceTimersByTime(30000);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
     });
   });
 

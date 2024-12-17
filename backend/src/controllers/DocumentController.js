@@ -28,7 +28,7 @@ exports.create = async (req, res) => {
     global._requestsCount.error++;
     return res.status(400).json({ error: 'Invalid CNPJ' });
   }
-  
+
   const existingItem = await Document.findOne({ number });
 
   if (existingItem) {
@@ -36,8 +36,16 @@ exports.create = async (req, res) => {
     return res.status(400).json({ error: 'Document already exists' });
   }
   
-  const item = new Document({ type, number });
-  await item.save();
+  let item;  
+
+  try {
+    item = new Document({ type, number });
+    await item.save();
+  } catch (error) {
+    global._requestsCount.error++;
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+  
   res.status(201).json(item);
 
   global._requestsCount.success++;
@@ -47,13 +55,20 @@ exports.updateBlockStatus = async (req, res) => {
   const { id } = req.params;
   const { isBlocked } = req.body;
 
-  const item = await Document.findByIdAndUpdate(
-    id,
-    { isBlocked },
-    { new: true }
-  );
-
   global._requestsCount.total++;
+
+  let item;
+
+  try {
+    item = await Document.findByIdAndUpdate(
+      id,
+      { isBlocked },
+      { new: true }
+    );
+  } catch (error) {
+    global._requestsCount.error++;
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 
   if (!item) {
     global._requestsCount.error++;
