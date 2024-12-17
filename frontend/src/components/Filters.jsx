@@ -1,6 +1,5 @@
 // src/components/Filters.js
 import React, { useState } from 'react';
-import './Filters.css';
 
 function Filters({ onChange }) {
   const [type, setType] = useState('');
