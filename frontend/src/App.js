@@ -9,7 +9,7 @@ import api from './services/api';
 
 function App() {
   const [items, setItems] = useState([]);
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState('');
   const [filter, setFilter] = useState({ type: '', isBlocked: '' });
 
   const fetchItems = useCallback(async () => {
@@ -24,7 +24,7 @@ function App() {
       setItems([...items, data]);
       setMessage('');
     } catch (error) {
-      setMessage(error?.response?.data?.error || "Unknown error");
+      setMessage(`Failed to add document: ${error?.response?.data?.error || "Unknown error"}`);
     }
   };
 
@@ -34,7 +34,7 @@ function App() {
       fetchItems();
       setMessage('');
     } catch (error) {
-      setMessage(error?.response?.data?.error || "Unknown error");
+      setMessage(`Failed to delete document: ${error?.response?.data?.error || "Unknown error"}`);
     }
 
   };
@@ -45,7 +45,7 @@ function App() {
       setItems(items.map((item) => (item._id === id ? data : item)));
       setMessage('');
     } catch (error) {
-      setMessage(error?.response?.data?.error || "Unknown error");
+      setMessage(`Failed to block document: ${error?.response?.data?.error || "Unknown error"}`);
     }
   };
 

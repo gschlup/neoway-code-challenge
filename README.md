@@ -77,7 +77,7 @@ neoway-code-challenge/
 │ │ └── DocumentForm.test.js
 │ ├── package.json
 │ └── tailwind.config.js
-└── docker-compose.yml
+└── docker-compose.yaml
 ```
 
 ## 📄 License

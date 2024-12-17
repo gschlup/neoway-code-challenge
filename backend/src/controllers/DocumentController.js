@@ -28,7 +28,14 @@ exports.create = async (req, res) => {
     global._requestsCount.error++;
     return res.status(400).json({ error: 'Invalid CNPJ' });
   }
+  
+  const existingItem = await Document.findOne({ number });
 
+  if (existingItem) {
+    global._requestsCount.error++;
+    return res.status(400).json({ error: 'Document already exists' });
+  }
+  
   const item = new Document({ type, number });
   await item.save();
   res.status(201).json(item);
