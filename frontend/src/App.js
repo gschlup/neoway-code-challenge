@@ -1,8 +1,8 @@
 // src/App.js
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
-import CpfCnpjForm from './components/CpfCnpjForm';
-import CpfCnpjList from './components/CpfCnpjList';
+import DocumentForm from './components/DocumentForm';
+import DocumentList from './components/DocumentList';
 import Filters from './components/Filters';
 import ErrorMessage from './components/ErrorMessage';
 import api from './services/api';
@@ -14,13 +14,13 @@ function App() {
 
   const fetchItems = useCallback(async () => {
     const query = new URLSearchParams(filter).toString();
-    const { data } = await api.get(`/cpfs-cnpjs?${query}`);
+    const { data } = await api.get(`/document?${query}`);
     setItems(data);
   }, [filter]);
 
   const handleAddItem = async (item) => {
     try {
-      const { data } = await api.post('/cpfs-cnpjs', item);
+      const { data } = await api.post('/document', item);
       setItems([...items, data]);
       setMessage('');
     } catch (error) {
@@ -30,7 +30,7 @@ function App() {
 
   const handleDeleteItem = async (id) => {
     try {
-      await api.delete(`/cpfs-cnpjs/${id}`);
+      await api.delete(`/document/${id}`);
       fetchItems();
       setMessage('');
     } catch (error) {
@@ -41,7 +41,7 @@ function App() {
 
   const handleToggleBlock = async (id, isBlocked) => {
     try {
-      const { data } = await api.patch(`/cpfs-cnpjs/${id}/block`, { isBlocked });
+      const { data } = await api.patch(`/document/${id}/block`, { isBlocked });
       setItems(items.map((item) => (item._id === id ? data : item)));
       setMessage('');
     } catch (error) {
@@ -61,10 +61,10 @@ function App() {
   return (
     <div className="App">
       <h1>CPF/CNPJ Manager</h1>
-      <CpfCnpjForm onAdd={handleAddItem} />
+      <DocumentForm onAdd={handleAddItem} />
       {message && <ErrorMessage message={message} />}
       <Filters onChange={handleFilterChange} />
-      <CpfCnpjList items={items} onBlockToggle={handleToggleBlock} onDelete={handleDeleteItem} />
+      <DocumentList items={items} onBlockToggle={handleToggleBlock} onDelete={handleDeleteItem} />
     </div>
   );
 }

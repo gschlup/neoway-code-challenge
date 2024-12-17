@@ -50,10 +50,10 @@ neoway-code-challenge/
 ├── backend/
 │ ├── src/
 │ │ ├── controllers/
-│ │ │ ├── cpfCnpjController.js
+│ │ │ ├── DocumentController.js
 │ │ │ └── statusController.js
 │ │ ├── models/
-│ │ │ ├── CpfCnpj.js
+│ │ │ ├── Document.js
 │ │ ├── routes/
 │ │ │ ├── index.js
 │ │ └── app.js
@@ -64,8 +64,8 @@ neoway-code-challenge/
 ├── frontend/
 │ ├── src/
 │ │ ├── components/
-│ │ │ ├── CpfCnpjForm.js
-│ │ │ ├── CpfCnpjList.js
+│ │ │ ├── DocumentForm.js
+│ │ │ ├── DocumentList.js
 │ │ │ ├── ErrorMessage.js
 │ │ │ ├── Filters.js
 │ │ ├── services/
@@ -74,7 +74,7 @@ neoway-code-challenge/
 │ │ └── index.js
 │ ├── tests/
 │ │ └── components/
-│ │ └── CpfCnpjForm.test.js
+│ │ └── DocumentForm.test.js
 │ ├── package.json
 │ └── tailwind.config.js
 └── docker-compose.yml

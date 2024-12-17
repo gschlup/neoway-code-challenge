@@ -1,4 +1,4 @@
-const CpfCnpj = require('../models/CpfCnpj');
+const Document = require('../models/Document');
 const { cpf, cnpj } = require('cpf-cnpj-validator');
 
 exports.getAll = async (req, res) => {
@@ -7,7 +7,7 @@ exports.getAll = async (req, res) => {
   if (type) filter.type = type;
   if (isBlocked) filter.isBlocked = isBlocked === 'true';
 
-  const items = await CpfCnpj.find(filter);
+  const items = await Document.find(filter);
   global._requestsCount.total++;
   global._requestsCount.success++;
 
@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
     return res.status(400).json({ error: 'Invalid CNPJ' });
   }
 
-  const item = new CpfCnpj({ type, number });
+  const item = new Document({ type, number });
   await item.save();
   res.status(201).json(item);
 
@@ -40,7 +40,7 @@ exports.updateBlockStatus = async (req, res) => {
   const { id } = req.params;
   const { isBlocked } = req.body;
 
-  const item = await CpfCnpj.findByIdAndUpdate(
+  const item = await Document.findByIdAndUpdate(
     id,
     { isBlocked },
     { new: true }
@@ -59,7 +59,7 @@ exports.updateBlockStatus = async (req, res) => {
 exports.delete = async (req, res) => {
   const { id } = req.params;
 
-  const item = await CpfCnpj.findByIdAndDelete(id);
+  const item = await Document.findByIdAndDelete(id);
 
   global._requestsCount.total++;
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function CpfCnpjForm({ onAdd }) {
+function DocumentForm({ onAdd }) {
   const [type, setType] = useState('CPF');
   const [number, setNumber] = useState('');
 
@@ -36,4 +36,4 @@ function CpfCnpjForm({ onAdd }) {
   );
 }
 
-export default CpfCnpjForm;
+export default DocumentForm;

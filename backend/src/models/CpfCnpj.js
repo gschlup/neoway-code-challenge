@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const CpfCnpjSchema = new mongoose.Schema({
+const DocumentSchema = new mongoose.Schema({
   type: { type: String, enum: ['CPF', 'CNPJ'], required: true },
   number: { type: String, required: true },
   isBlocked: { type: Boolean, default: false },
@@ -8,4 +8,4 @@ const CpfCnpjSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('CpfCnpj', CpfCnpjSchema);
+module.exports = mongoose.model('Document', DocumentSchema);

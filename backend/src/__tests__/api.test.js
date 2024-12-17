@@ -1,7 +1,7 @@
-const CpfCnpj = require('../models/CpfCnpj');
-const CpfCnpjController = require('../controllers/CpfCnpjController');
+const Document = require('../models/Document');
+const DocumentController = require('../controllers/DocumentController');
 
-describe('CpfCnpjController', () => {
+describe('DocumentController', () => {
   let mockFind, mockSave, mockFindByIdAndUpdate, mockFindByIdAndDelete;
 
   beforeEach(() => {
@@ -10,10 +10,10 @@ describe('CpfCnpjController', () => {
     mockFindByIdAndUpdate = jest.fn();
     mockFindByIdAndDelete = jest.fn();
 
-    CpfCnpj.find = mockFind;
-    CpfCnpj.prototype.save = mockSave;
-    CpfCnpj.findByIdAndUpdate = mockFindByIdAndUpdate;
-    CpfCnpj.findByIdAndDelete = mockFindByIdAndDelete;
+    Document.find = mockFind;
+    Document.prototype.save = mockSave;
+    Document.findByIdAndUpdate = mockFindByIdAndUpdate;
+    Document.findByIdAndDelete = mockFindByIdAndDelete;
   });
 
   describe('getAll', () => {
@@ -24,7 +24,7 @@ describe('CpfCnpjController', () => {
       const req = { query: {} };
       const res = { json: jest.fn() };
 
-      await CpfCnpjController.getAll(req, res);
+      await DocumentController.getAll(req, res);
       expect(mockFind).toHaveBeenCalledWith({});
       expect(res.json).toHaveBeenCalledWith(mockItems);
     });
@@ -35,7 +35,7 @@ describe('CpfCnpjController', () => {
       const req = { query: { type: 'CPF', isBlocked: 'true' } };
       const res = { json: jest.fn() };
 
-      await CpfCnpjController.getAll(req, res);
+      await DocumentController.getAll(req, res);
       expect(mockFind).toHaveBeenCalledWith({ type: 'CPF', isBlocked: true });
     });
   });
@@ -48,7 +48,7 @@ describe('CpfCnpjController', () => {
       const req = { body: mockItem };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
-      await CpfCnpjController.create(req, res);
+      await DocumentController.create(req, res);
       expect(res.status).toHaveBeenCalledWith(201);
     });
 
@@ -56,7 +56,7 @@ describe('CpfCnpjController', () => {
       const req = { body: { type: 'CPF', number: '123.456.789-00' } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
-      await CpfCnpjController.create(req, res);
+      await DocumentController.create(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ error: 'Invalid CPF' });
     });
@@ -70,7 +70,7 @@ describe('CpfCnpjController', () => {
       const req = { params: { id: '123' }, body: { isBlocked: true } };
       const res = { json: jest.fn() };
 
-      await CpfCnpjController.updateBlockStatus(req, res);
+      await DocumentController.updateBlockStatus(req, res);
       expect(mockFindByIdAndUpdate).toHaveBeenCalledWith('123', { isBlocked: true }, { new: true });
       expect(res.json).toHaveBeenCalledWith(mockItem);
     });
@@ -81,7 +81,7 @@ describe('CpfCnpjController', () => {
       const req = { params: { id: '123' }, body: { isBlocked: true } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
-      await CpfCnpjController.updateBlockStatus(req, res);
+      await DocumentController.updateBlockStatus(req, res);
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ error: 'Record not found' });
     });
@@ -95,7 +95,7 @@ describe('CpfCnpjController', () => {
       const req = { params: { id: '123' } };
       const res = { json: jest.fn() };
 
-      await CpfCnpjController.delete(req, res);
+      await DocumentController.delete(req, res);
       expect(mockFindByIdAndDelete).toHaveBeenCalledWith('123');
       expect(res.json).toHaveBeenCalledWith(mockItem);
     });
@@ -106,7 +106,7 @@ describe('CpfCnpjController', () => {
       const req = { params: { id: '123' } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
-      await CpfCnpjController.delete(req, res);
+      await DocumentController.delete(req, res);
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ error: 'Record not found' });
     });

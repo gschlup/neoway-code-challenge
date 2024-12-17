@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CpfCnpjList({ items, onBlockToggle, onDelete }) {
+function DocumentList({ items, onBlockToggle, onDelete }) {
   return (
     <ul className="space-y-4">
       {items.map((item) => (
@@ -35,4 +35,4 @@ function CpfCnpjList({ items, onBlockToggle, onDelete }) {
   );
 }
 
-export default CpfCnpjList;
+export default DocumentList;
