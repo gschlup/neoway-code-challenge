@@ -16,7 +16,7 @@ These instructions will help you get a copy of the project up and running on you
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/neoway-code-challenge.git
+   git clone https://github.com/gschlup/neoway-code-challenge.git
    cd neoway-code-challenge
    ```
 
@@ -86,4 +86,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ✨ Author
 
-Guilherme Schlup - [Your GitHub Profile](https://github.com/gschlup)
+Guilherme Schlup - [GitHub Profile](https://github.com/gschlup)
