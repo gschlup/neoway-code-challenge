@@ -64,10 +64,10 @@ neoway-code-challenge/
 ├── frontend/
 │ ├── src/
 │ │ ├── components/
-│ │ │ ├── DocumentForm.js
-│ │ │ ├── DocumentList.js
-│ │ │ ├── ErrorMessage.js
-│ │ │ ├── Filters.js
+│ │ │ ├── DocumentForm.jsx
+│ │ │ ├── DocumentList.jsx
+│ │ │ ├── ErrorMessage.jsx
+│ │ │ ├── Filters.jsx
 │ │ ├── services/
 │ │ │ └── api.js
 │ │ ├── App.js
