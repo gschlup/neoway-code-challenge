@@ -1,5 +1,5 @@
 const startTime = Date.now();
-exports.getStatus = async (req, res) => {
+exports.getStatus = async (request, reply) => {
   const uptime = Date.now() - startTime;
 
   // Convert uptime to a more readable format
@@ -10,7 +10,7 @@ exports.getStatus = async (req, res) => {
 
   const formattedUptime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-  res.json({
+  reply.send({
     status: 'ok',
     uptime: formattedUptime,
     requestsCount: global._requestsCount

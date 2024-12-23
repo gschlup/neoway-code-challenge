@@ -1,8 +1,8 @@
 const Document = require('../models/Document');
 const { cpf, cnpj } = require('cpf-cnpj-validator');
 
-exports.getAll = async (req, res) => {
-  const { type, isBlocked } = req.query;
+exports.getAll = async (request, reply) => {
+  const { type, isBlocked } = request.query;
   const filter = {};
   if (type) filter.type = type;
   if (isBlocked) filter.isBlocked = isBlocked === 'true';
@@ -11,11 +11,11 @@ exports.getAll = async (req, res) => {
   global._requestsCount.total++;
   global._requestsCount.success++;
 
-  res.json(items);
-};
+  reply.send(items);
+};  
 
-exports.create = async (req, res) => {
-  const { type, number } = req.body;
+exports.create = async (request, reply) => {
+  const { type, number } = request.body;
 
   global._requestsCount.total++;
 
